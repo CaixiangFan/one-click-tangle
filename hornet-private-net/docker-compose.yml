@@ -30,7 +30,7 @@ services:
       - ./db/private-tangle:/app/db
       - ./snapshots:/app/snapshots
   
-  node1:
+  node:
     hostname: node1
     # network_mode: host
     networks:
