@@ -134,6 +134,8 @@ startTangle () {
 
   # Run a regular node 
   docker-compose --log-level ERROR up -d node
+  docker-compose --log-level ERROR up -d node2
+  docker-compose --log-level ERROR up -d node3
 }
 
 generateMerkleTree () {
