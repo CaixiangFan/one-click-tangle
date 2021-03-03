@@ -86,9 +86,9 @@ services:
       - "15600:15600"
       - "8081:8081"
     volumes:
-      - ./config/config-node.json:/app/config.json:ro
+      - ./config/config-node2.json:/app/config.json:ro
       - ./config/profiles.json:/app/profiles.json
-      - ./config/peering-node.json:/app/peering.json
+      - ./config/peering-node2.json:/app/peering.json
       - ./db/private-tangle:/app/db
       - ./snapshots:/app/snapshots
 
@@ -117,9 +117,9 @@ services:
       - "15600:15600"
       - "8081:8081"
     volumes:
-      - ./config/config-node.json:/app/config.json:ro
+      - ./config/config-node3.json:/app/config.json:ro
       - ./config/profiles.json:/app/profiles.json
-      - ./config/peering-node.json:/app/peering.json
+      - ./config/peering-node3.json:/app/peering.json
       - ./db/private-tangle:/app/db
       - ./snapshots:/app/snapshots
 

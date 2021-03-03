@@ -77,6 +77,13 @@ clean () {
   if [ -d ./db/private-tangle/node.db ]; then
     sudo rm -Rf ./db/private-tangle/node.db
   fi
+  # new added
+  if [ -d ./db/private-tangle/node2.db ]; then
+    sudo rm -Rf ./db/private-tangle/node2.db
+  fi
+  if [ -d ./db/private-tangle/node3.db ]; then
+    sudo rm -Rf ./db/private-tangle/node3.db
+  fi
 
   if [ -d ./db/private-tangle/spammer.db ]; then
     sudo rm -Rf ./db/private-tangle/spammer.db
@@ -153,6 +160,8 @@ generateMerkleTree () {
   sed -i 's/"merkleTreeDepth": [[:digit:]]\+/"merkleTreeDepth": '$MERKLE_TREE_DEPTH'/g' config/config-coo.json
   # Tree Depth has to be copied to the different nodes of the network
   sed -i 's/"merkleTreeDepth": [[:digit:]]\+/"merkleTreeDepth": '$MERKLE_TREE_DEPTH'/g' config/config-node.json
+  sed -i 's/"merkleTreeDepth": [[:digit:]]\+/"merkleTreeDepth": '$MERKLE_TREE_DEPTH'/g' config/config-node2.json
+  sed -i 's/"merkleTreeDepth": [[:digit:]]\+/"merkleTreeDepth": '$MERKLE_TREE_DEPTH'/g' config/config-node3.json
   sed -i 's/"merkleTreeDepth": [[:digit:]]\+/"merkleTreeDepth": '$MERKLE_TREE_DEPTH'/g' config/config-spammer.json
 
   # Running NGINX Server that will allow us to check the logs
@@ -193,7 +202,8 @@ setupCoordinator () {
   sed -i 's/"address": \("\).*\("\)/"address": \1'$MERKLE_TREE_ADDR'\2/g' config/config-coo.json
 
   sed -i 's/"address": \("\).*\("\)/"address": \1'$MERKLE_TREE_ADDR'\2/g' config/config-node.json
-
+  sed -i 's/"address": \("\).*\("\)/"address": \1'$MERKLE_TREE_ADDR'\2/g' config/config-node2.json
+  sed -i 's/"address": \("\).*\("\)/"address": \1'$MERKLE_TREE_ADDR'\2/g' config/config-node3.json
   sed -i '0,/"address"/s/"address": \("\).*\("\)/"address": \1'$MERKLE_TREE_ADDR'\2/' config/config-spammer.json
 
   echo "Bootstrapping the Coordinator..."

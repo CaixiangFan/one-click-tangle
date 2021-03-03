@@ -11,6 +11,16 @@
       "identity": "coo:15600",
       "alias": "coo",
       "preferIPv6": false
+    },
+    {
+      "identity": "node2:15600",
+      "alias": "node2",
+      "preferIPv6": false
+    },
+    {
+      "identity": "node3:15600",
+      "alias": "node3",
+      "preferIPv6": false
     }
   ]
 }

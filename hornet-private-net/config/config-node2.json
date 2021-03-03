@@ -1,0 +1,91 @@
+{
+  "db": {
+    "path": "/app/db/node2.db"
+  },
+  "useProfile": "auto",
+  "httpAPI": {
+    "basicAuth": {
+      "enabled": false,
+      "username": "",
+      "passwordHash": "",
+      "passwordSalt": ""
+    },
+    "excludeHealthCheckFromAuth": false,
+    "permitRemoteAccess": [
+      "interruptAttachToTangle",
+      "addNeighbors",
+      "removeNeighbors",
+      "getNeighbors",
+      "attachToTangle",
+      "getNodeInfo",
+      "getBalances",
+      "checkConsistency",
+      "getTipInfo",
+      "getTransactionsToApprove",
+      "getInclusionStates",
+      "getNodeAPIConfiguration",
+      "wereAddressesSpentFrom",
+      "broadcastTransactions",
+      "findTransactions",
+      "storeTransactions",
+      "getTrytes",
+      "createSnapshotFile"
+    ],
+    "whitelistedAddresses": [],
+    "bindAddress": "0.0.0.0:14265",
+    "limits": {
+      "bodyLengthBytes": 1000000,
+      "findTransactions": 1000,
+      "getTrytes": 1000,
+      "requestsList": 1000
+    }
+  },
+  "dashboard": {
+    "bindAddress": "0.0.0.0:8081",
+    "theme": "default",
+    "basicAuth": {
+      "enabled": false,
+      "username": "",
+      "passwordHash": "",
+      "passwordSalt": ""
+    }
+  },
+  "snapshots": {
+    "loadType": "global",
+    "global": {
+        "path": "/app/snapshots/private-tangle/snapshot.csv",
+        "spentAddressesPaths": [],
+        "index": 0
+    }
+  },
+  "spentAddresses": {
+    "enabled": true
+  },
+  "network": {
+    "preferIPv6": false,
+    "gossip": {
+      "bindAddress": "0.0.0.0:15600",
+      "reconnectAttemptIntervalSeconds": 60
+    }
+  },
+  "node2": {
+    "alias": "node2",
+    "showAliasInGetNodeInfo": false,
+    "disablePlugins": [
+      "Autopeering", "WarpSync",
+      "Profiling", "Prometheus", 
+      "MQTT", 
+      "Spammer",  "Coordinator"
+    ],
+    "enablePlugins": ["URTS", "WebAPI", "ZMQ"]
+  },
+  "zmq": {
+    "bindAddress": "0.0.0.0:5556"
+  },
+  "coordinator": {
+    "address": "INHVXYBIEIJIWXZJBYJRWCCOWJU9WBJ9HZVYIDYKJP9QOBMPFPGJLBIXOFPQWLRQRHDX9SSPEHTRS9NP9",
+    "securityLevel": 2,
+    "merkleTreeDepth": 10,
+    "mwm": 9
+  }
+}
