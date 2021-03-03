@@ -68,7 +68,7 @@
       "reconnectAttemptIntervalSeconds": 60
     }
   },
-  "node2": {
+  "node": {
     "alias": "node2",
     "showAliasInGetNodeInfo": false,
     "disablePlugins": [

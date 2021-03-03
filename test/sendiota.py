@@ -12,8 +12,8 @@ with open('config.json', 'r') as f:
     data = json.load(f)
     url = data['url']
 # Replace this seed with the one that owns the address you used to get free test tokens
-seed = 'QTPTQCDVTAPWRFOVHKLHUEAYETHLQZCN9WHMM9P99GKLOLADGTTMAGNNYROSOOBWLOJONWLWMBWCDIYPD'
-
+seed = 'QUOORPDGVAOPTZLJ9VENMYVJHUYG9IGBHGTFBPMMOLMB9QFEDDLSXQTBYLTLWCYBDUKDFPJZDERXYCLXA'
+input_addr = Address('PYJNIVWXVDPEZMRWFKMCHXHDESECFXYASQDNYGKQZWBHR99POMPULDSVQGRFOYAPCGMKCHDWWFCOYZAEA')
 # Connect to a node
 api = Iota(url, seed, testnet = True)
 
@@ -24,12 +24,12 @@ address = 'B9WSEPNPHMEIWIAUQIKUVBGKSBTIVZHFKDNWAVNWTRQUKBUWBE9VUME9DGFEHVAWNJZME
 # that sends 1 i to the address
 tx = ProposedTransaction(
     address=Address(address),
-    value = 1
+    value = 10000
 )
 
-print('Sending 1 i to ',  address)
+print('Sending 10000 i to ',  address)
 
-result = api.send_transfer(transfers=[tx] )
+result = api.send_transfer(transfers=[tx],inputs=[[input_addr]] )
 
 print('Bundle: ')
 print(result['bundle'].hash)
