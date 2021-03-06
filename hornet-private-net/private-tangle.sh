@@ -143,7 +143,7 @@ startTangle () {
   # docker-compose --log-level ERROR up -d node
   # docker-compose --log-level ERROR up -d node2
   # docker-compose --log-level ERROR up -d node3
-  docker stack deplooy -c docker-compose.yml tangle
+  docker stack deploy -c docker-compose.yml tangle
 }
 
 generateMerkleTree () {
