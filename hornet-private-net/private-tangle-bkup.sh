@@ -133,17 +133,16 @@ startTangle () {
   echo "$completed_message" >> $MERKLE_TREE_LOG_FILE 
   echo '</p></body></html>' >> $MERKLE_TREE_LOG_FILE
 
-  # # Run the coordinator
-  # docker-compose --log-level ERROR up -d coo
+  # Run the coordinator
+  docker-compose --log-level ERROR up -d coo
 
-  # # Run the spammer
-  # docker-compose --log-level ERROR up -d spammer
+  # Run the spammer
+  docker-compose --log-level ERROR up -d spammer
 
-  # # Run a regular node 
-  # docker-compose --log-level ERROR up -d node
-  # docker-compose --log-level ERROR up -d node2
-  # docker-compose --log-level ERROR up -d node3
-  docker stack deplooy -c docker-compose.yml tangle
+  # Run a regular node 
+  docker-compose --log-level ERROR up -d node
+  docker-compose --log-level ERROR up -d node2
+  docker-compose --log-level ERROR up -d node3
 }
 
 generateMerkleTree () {
@@ -166,7 +165,7 @@ generateMerkleTree () {
   sed -i 's/"merkleTreeDepth": [[:digit:]]\+/"merkleTreeDepth": '$MERKLE_TREE_DEPTH'/g' config/config-spammer.json
 
   # Running NGINX Server that will allow us to check the logs
-  # docker-compose --log-level ERROR up -d nginx
+  docker-compose --log-level ERROR up -d nginx
 
   if [ $? -eq 0 ]; 
     then
@@ -255,8 +254,7 @@ generateInitialAddress () {
 
 stopContainers () {
   echo "Stopping containers..."
-	# docker-compose --log-level ERROR down -v --remove-orphans
-  docker stack rm tangle
+	docker-compose --log-level ERROR down -v --remove-orphans
 }
 
 # TODO: start, stop, remove, resume
