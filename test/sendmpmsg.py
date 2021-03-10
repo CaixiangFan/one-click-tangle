@@ -1,19 +1,14 @@
 
 from multiprocessing import Process
-from iota import Iota
-from iota import ProposedTransaction
-from iota import Address
-from iota import Tag
-from iota import TryteString
+from iota import Iota, ProposedTransaction, Address, Tag, TryteString
 import sys
 import json
 
 with open('config.json', 'r') as f:
     data = json.load(f)
     url = data['url']
-# returns JSON object as  
-# a dictionary 
-api = Iota(url, devnet = True) 
+# returns JSON object as a dictionary 
+api = Iota(url, testnet = True) 
 address = 'ZLGVEQ9JUZZWCZXLWVNTHBDX9G9KZTJP9VEERIIFHY9SIQKYBVAHIMLHXPQVE9IXFDDXNHQINXJDRPFDXNYVAPLZAW'
 message = TryteString.from_unicode('Hello world')
 
