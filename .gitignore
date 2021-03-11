@@ -6,3 +6,5 @@ logs
 db
 .DS_Store
 snapshots
+*.har
+*.json
