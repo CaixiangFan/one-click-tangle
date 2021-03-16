@@ -14,7 +14,7 @@ with open('config.json', 'r') as f:
 api = Iota(url, testnet = True) 
 address = 'ZLGVEQ9JUZZWCZXLWVNTHBDX9G9KZTJP9VEERIIFHY9SIQKYBVAHIMLHXPQVE9IXFDDXNHQINXJDRPFDXNYVAPLZAW'
 message = TryteString.from_unicode('Hello world')
-
+# 
 tx = ProposedTransaction(
 address = Address(address),
 message = message,

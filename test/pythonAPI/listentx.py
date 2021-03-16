@@ -3,8 +3,8 @@ import json
 
 context = zmq.Context()
 socket = context.socket(zmq.SUB)
-# socket.connect('tcp://10.2.9.136:5556')
-socket.connect('tcp://zmq.devnet.iota.org:5556')
+socket.connect('tcp://10.2.9.136:5556')
+# socket.connect('tcp://zmq.devnet.iota.org:5556')
 socket.subscribe('tx')
 socket.subscribe('sn')
 print ("Socket connected")

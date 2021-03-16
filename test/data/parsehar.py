@@ -1,22 +1,26 @@
 import json
 from haralyzer import HarParser, HarPage
-with open('10.2.9.136.har', 'r') as f:
+from datetime import datetime
+
+with open('10.2.9.136_2.har', 'r') as f:
     har_parser = HarParser(json.loads(f.read()))
 
 data = har_parser.har_data
-# print(type(data), data.keys())
-
-# print(har_parser.har_data["entries"][10].keys())
-# print(len(har_parser.har_data["entries"][10]['_webSocketMessages']))
+ws_entries = []
 entries = []
 dict_data = {}
-for entry in har_parser.har_data["entries"][10]['_webSocketMessages']:    
-    if entry['data'].startswith("{"):
-        data = json.loads(entry['data'])
+for entry in har_parser.har_data["entries"]:
+    if '_webSocketMessages' in entry.keys():
+        ws_entries = entry['_webSocketMessages']
+        break
+
+for ws_entry in ws_entries:    
+    if ws_entry['data'].startswith("{"):
+        data = json.loads(ws_entry['data'])
         if data['type'] == 3:
-            # print(data)
-            entry['data'] = data
-            entries.append(entry)
+            ws_entry['data'] = data
+            entries.append(ws_entry)
 dict_data['WS'] = entries
-with open('data.json', 'w') as fp:
+filename = "data_" + datetime.now().strftime("%m-%d-%Y_%H:%M:%S") + ".json"
+with open(filename, 'w') as fp:
     json.dump(dict_data, fp)
