@@ -9,16 +9,14 @@ import json
 with open('config.json', 'r') as f:
     data = json.load(f)
     url = data['url']
-# returns JSON object as  
-# a dictionary 
+# returns JSON object as a dictionary 
 api = Iota(url, testnet = True) 
 address = 'ZLGVEQ9JUZZWCZXLWVNTHBDX9G9KZTJP9VEERIIFHY9SIQKYBVAHIMLHXPQVE9IXFDDXNHQINXJDRPFDXNYVAPLZAW'
 message = TryteString.from_unicode('Hello world')
-# 
 tx = ProposedTransaction(
-address = Address(address),
-message = message,
-value = 0
+    address = Address(address),
+    message = message,
+    value = 0
 )
 
 num = 1
