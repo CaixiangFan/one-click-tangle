@@ -7,7 +7,7 @@ with open('config.json', 'r') as f:
     data = json.load(f)
     url = data['url']
 
-address = "B9OOTDUXTUSQZRU9TPHPHYRCUPUWBJFFFJQCFYZELFTGDGDTKFVMXXAKY9JOIEJ9VDCZYEGS9GXCFVHCA"
+address = "EC9FPVIROHPHYFUZQPLYTKKEYYRAKEBPGBCZYQUUWYDAIBYOXXZYSNEDXXHBIGXKXPSTDOSTD9PVRTLRD"
 
 if len(sys.argv) == 2:
     address = sys.argv[1]

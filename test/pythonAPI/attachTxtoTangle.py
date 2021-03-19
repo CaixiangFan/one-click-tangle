@@ -1,21 +1,11 @@
 import urllib.request as urllib2
-import json
-import getTxtoApprove
+from iota import Address, TryteString, TransactionTrytes
+import json, sys
 
-tipData = getTxtoApprove.getTxToApprove()
-
-command = { 
-"command": "attachToTangle", 
-"trunkTransaction": tipData['trunkTransaction'],
-"branchTransaction": tipData['branchTransaction'],
-"trytes": [
-  "HOHZUBAFSGNYMOOYGPCKANKOR ...",
-  "IOELDJYWAZBKWBTQZYLPTPLIT ..."
-  ]
+command_ts = {
+    "command": "getTransactionsToApprove"
 }
-
-stringified = json.dumps(command).encode("utf-8")
-
+stringified_ts = json.dumps(command_ts).encode("utf-8")
 headers = {
     'content-type': 'application/json',
     'X-IOTA-API-Version': '1'
@@ -25,9 +15,22 @@ with open('config.json', 'r') as f:
     data = json.load(f)
     url = data['url']
 
-request = urllib2.Request(url=url, data=stringified, headers=headers)
-returnData = urllib2.urlopen(request).read()
+request_ts = urllib2.Request(url=url, data=stringified_ts, headers=headers)
+jsonData = json.loads(urllib2.urlopen(request_ts).read())
 
-jsonData = json.loads(returnData)
+# propose a transaction and input trytes string to "trytes"
+address = 'ZLGVEQ9JUZZWCZXLWVNTHBDX9G9KZTJP9VEERIIFHY9SIQKYBVAHIMLHXPQVE9IXFDDXNHQINXJDRPFDXNYVAPLZAW'
+message = TryteString.from_unicode('Hello world')
 
-print(jsonData)
+trytes = TransactionTrytes(message)
+command_pow = { 
+    "command": "attachToTangle", 
+    "trunkTransaction": jsonData['trunkTransaction'],
+    "branchTransaction": jsonData['branchTransaction'],
+    "trytes": [str(trytes)]
+}
+stringified_pow = json.dumps(command_pow).encode("utf-8")
+request_pow = urllib2.Request(url=url, data=stringified_pow, headers=headers)
+returnData = urllib2.urlopen(request_pow).read()
+jsonData_pow = json.loads(returnData)
+print(jsonData_pow['trytes'])
