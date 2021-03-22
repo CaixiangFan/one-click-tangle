@@ -119,5 +119,3 @@ class IotaHttpUser(HttpUser):
         request_broadcast = self.client.request(method='post', name='broadcast', url=self.host, 
                                     data=self.stringify(command_broadcast), headers=self.headers)
         print(request_broadcast.json())
-
-        # where is the difference of tip selection response time from? Queue?

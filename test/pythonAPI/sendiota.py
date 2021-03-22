@@ -1,36 +1,32 @@
-#////////////////////////////////////////////////
-#// Send a microtransaction
-#////////////////////////////////////////////////
+from iota import Iota, Address, TryteString, ProposedTransaction, Tag
+from iota.crypto.types import Seed
+# Put your seed here from Tutorial 4.a, or a seed that owns tokens (devnet)
+my_seed = Seed(b'GNKDGCZRZJDRAOTHMBTINCBI9A9ZNHCZGCKMEYGODDJFMPPSEJLNMIAHLTOIFATUIGLNEVZS9TTUTWIMX')
 
-from iota import Iota
-from iota import ProposedTransaction
-from iota import Address
-
-import json
-
-with open('config.json', 'r') as f:
-    data = json.load(f)
-    url = data['url']
-# Replace this seed with the one that owns the address you used to get free test tokens
-seed = 'QUOORPDGVAOPTZLJ9VENMYVJHUYG9IGBHGTFBPMMOLMB9QFEDDLSXQTBYLTLWCYBDUKDFPJZDERXYCLXA'
-input_addr = Address('PYJNIVWXVDPEZMRWFKMCHXHDESECFXYASQDNYGKQZWBHR99POMPULDSVQGRFOYAPCGMKCHDWWFCOYZAEA')
-# Connect to a node
-api = Iota(url, seed, testnet = True)
-
-# Define an address to which to send IOTA tokens 
-address = 'B9WSEPNPHMEIWIAUQIKUVBGKSBTIVZHFKDNWAVNWTRQUKBUWBE9VUME9DGFEHVAWNJZMEBNCOURPHYDAB'
-
-# Define an input transaction object
-# that sends 1 i to the address
-tx = ProposedTransaction(
-    address=Address(address),
-    value = 10000
+# Declare an API object
+api = Iota(
+    adapter='http://10.2.6.91:14265',
+    seed=my_seed,
+    testnet=True,
 )
 
-print('Sending 10000 i to ',  address)
+# Addres to receive 1i
+# Feel free to replace it. For example, run the code from Tutorial 4.a
+# and use that newly generated address with a 'fresh' seed.
+receiver = Address(b'B9WSEPNPHMEIWIAUQIKUVBGKSBTIVZHFKDNWAVNWTRQUKBUWBE9VUME9DGFEHVAWNJZMEBNCOURPHYDAB')
 
-result = api.send_transfer(transfers=[tx],inputs=[[input_addr]] )
+print('Constructing transfer of 1i...')
+# Create the transfer object
+tx = ProposedTransaction(
+    address=receiver,
+    value=1,
+    message=TryteString.from_unicode('I just sent you 1i, use it wisely!'),
+    tag=Tag('VALUETX'),
+)
 
-print('Bundle: ')
-print(result['bundle'].hash)
+print('Preparing bundle and sending it to the network...')
+# Prepare the transfer and send it to the network
+response = api.send_transfer(transfers=[tx], security_level=2)
 
+print('Check your transaction on the Tangle!')
+print('https://utils.iota.org/bundle/%s/devnet' % response['bundle'].hash)
