@@ -5,12 +5,8 @@ services:
     image: caixiangfan/locust:1.0
     ports:
      - "8089:8089"
-    volumes:
-      - ./:/mnt/locust
-    command: -f /mnt/locust/locustfile.py --master -H http://master:8089
+    command: -f locustfile.py --master -H http://10.2.9.136:14265
   
   worker:
     image: caixiangfan/locust:1.0
-    volumes:
-      - ./:/mnt/locust
-    command: -f /mnt/locust/locustfile.py --worker --master-host master
+    command: -f locustfile.py --worker --master-host master
