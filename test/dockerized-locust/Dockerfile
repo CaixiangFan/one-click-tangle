@@ -8,6 +8,7 @@ EXPOSE 8089 5557
 RUN useradd --create-home locust
 USER locust
 WORKDIR /home/locust
+COPY *.py .
 ENTRYPOINT ["locust"]
 
 # turn off python output buffering
