@@ -1,18 +1,16 @@
-version: "3"
+version: '3'
+
 services:
-  locust-master:
+  master:
     image: caixiangfan/locust:1.0
     ports:
-      - "8089:8089"
-    deploy:
-      mode: replicated
-      replicas: 1
-      placement:
-        constraints: [node.role == manager]
-
-  locust-worker:
+     - "8089:8089"
+    volumes:
+      - ./:/mnt/locust
+    command: -f /mnt/locust/locustfile.py --master -H http://master:8089
+  
+  worker:
     image: caixiangfan/locust:1.0
-    command: "--master-host=locust-master"
-    deploy:
-      mode: replicated
-      replicas: 2
+    volumes:
+      - ./:/mnt/locust
+    command: -f /mnt/locust/locustfile.py --worker --master-host master
