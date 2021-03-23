@@ -20,12 +20,10 @@ Then, open the following network ports for swarm management:
 
 ## Getting started
 
-First you need to clone this repository and the official [locust](https://github.com/locustio/locust.git) repository
+First you need to clone this repository and the official [locust](https://github.com/locustio/locust.git) repository as submodule
 
 ```
-git clone https://github.com/CaixiangFan/one-click-tangle
-cd /one-click-tangle/test/dockerized-locust
-git clone https://github.com/locustio/locust.git
+git clone --recurse-submodules https://github.com/CaixiangFan/one-click-tangle.git
 ```
 
 Then replace the original Dockerfile with the customized one and copy locustfile.py to the locust directory
