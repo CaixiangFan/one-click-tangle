@@ -6,7 +6,7 @@ services:
       - "8089:8089"
     volumes:
       - ./:/mnt/locust
-    command: -f /mnt/locust/locustfile.py --master -H http://master:8089
+    command: -f /mnt/locust/locustfile.py --master -H http://10.2.9.136:14265
     deploy:
       mode: replicated
       replicas: 1
