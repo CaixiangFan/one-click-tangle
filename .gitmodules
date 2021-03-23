@@ -1,0 +1,3 @@
+[submodule "test/dockerized-locust/locust"]
+	path = test/dockerized-locust/locust
+	url = https://github.com/locustio/locust
