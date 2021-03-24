@@ -40,6 +40,12 @@ docker login
 docker push repo/name:tag
 ```
 
+Or run the bash script to build the image:
+
+```
+sh build.sh
+```
+
 ## Usage examples
 
 For docker run:
