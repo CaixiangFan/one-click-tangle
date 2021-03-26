@@ -20,7 +20,6 @@ class IotaClient():
             start_time = time.time()
             try:
                 result = func(*args, **kwargs)
-                # print(result['bundle'].tail_transaction.hash)
             except TimeoutError as e:
                 total_time = int((time.time() - start_time) * 1000)
                 self._locust_environment.events.request_failure.fire(

@@ -2,11 +2,11 @@ version: '3'
 
 services:
   master:
-    image: caixiangfan/locust:1.0
+    image: caixiangfan/locust
     ports:
      - "8089:8089"
     command: -f locustfile.py --master -H http://10.2.9.136:14265
   
   worker:
-    image: caixiangfan/locust:1.0
+    image: caixiangfan/locust
     command: -f locustfile.py --worker --master-host master
