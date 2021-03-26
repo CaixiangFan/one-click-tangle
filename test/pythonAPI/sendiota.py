@@ -1,11 +1,16 @@
 from iota import Iota, Address, TryteString, ProposedTransaction, Tag
 from iota.crypto.types import Seed
+import json
+
+with open('config.json', 'r') as f:
+    data = json.load(f)
+    url = data['url']
 # Put your seed here from Tutorial 4.a, or a seed that owns tokens (devnet)
-my_seed = Seed(b'GNKDGCZRZJDRAOTHMBTINCBI9A9ZNHCZGCKMEYGODDJFMPPSEJLNMIAHLTOIFATUIGLNEVZS9TTUTWIMX')
+my_seed = Seed(b'PZBAJMHQOWHZUMBPNAWASU9YQMQ9AEJQSDCRVPKKIQOTVCSPLNKTSOGVNFTCGDMX9IYTLAQDIEKLALLHB')
 
 # Declare an API object
 api = Iota(
-    adapter='http://10.2.6.91:14265',
+    adapter= url,
     seed=my_seed,
     testnet=True,
 )
