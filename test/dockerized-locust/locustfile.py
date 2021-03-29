@@ -46,16 +46,23 @@ class IotaUser(User):
 
 class IotaApiUser(IotaUser):
     wait_time = between(0,1)
+    address = 'ZLGVEQ9JUZZWCZXLWVNTHBDX9G9KZTJP9VEERIIFHY9SIQKYBVAHIMLHXPQVE9IXFDDXNHQINXJDRPFDXNYVAPLZAW'
+    message = TryteString.from_unicode('Hello world')
+    tx = ProposedTransaction(
+        address = Address(address),
+        message = message,
+        value = 0
+    )
+
     @task
     def send_msg(self):
-        address = 'ZLGVEQ9JUZZWCZXLWVNTHBDX9G9KZTJP9VEERIIFHY9SIQKYBVAHIMLHXPQVE9IXFDDXNHQINXJDRPFDXNYVAPLZAW'
-        message = TryteString.from_unicode('Hello world')
-        tx = ProposedTransaction(
-            address = Address(address),
-            message = message,
-            value = 0
-        )
-        result = self.client.send_transfer(transfers = [tx])
+        result = self.client.send_transfer(transfers = [self.tx])
+
+    @task
+    def send_trytes(self):
+        api = Iota(adapter="http://localhost:14265", testnet = True)
+        tx_trytes = api.prepare_transfer(transfers=[self.tx])
+        resp_sendTrytes = self.client.send_trytes(trytes=tx_trytes['trytes'])
 
 
 class IotaHttpUser(HttpUser):

@@ -8,3 +8,7 @@ db
 snapshots
 *.har
 *.json
+
+test/dockerized-locust/__pycache__/
+test/pythonAPI/__pycache__/
+*.pyc

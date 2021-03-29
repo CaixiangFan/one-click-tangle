@@ -26,3 +26,8 @@ if len(sys.argv) == 2:
 for i in range(num):
     result = api.send_transfer(transfers = [tx])
     print(result['bundle'].tail_transaction.hash)
+    print("tx:", tx)
+    tx_trytes = api.prepare_transfer(transfers=[tx])
+    resp_sendTrytes = api.send_trytes(trytes=tx_trytes['trytes'])
+
+    print(resp_sendTrytes)

@@ -32,6 +32,5 @@ tx = ProposedTransaction(
 print('Preparing bundle and sending it to the network...')
 # Prepare the transfer and send it to the network
 response = api.send_transfer(transfers=[tx], security_level=2)
-
 print('Check your transaction on the Tangle!')
 print('https://utils.iota.org/bundle/%s/devnet' % response['bundle'].hash)
