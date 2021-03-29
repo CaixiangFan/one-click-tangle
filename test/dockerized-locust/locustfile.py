@@ -75,7 +75,7 @@ class IotaHttpUser(HttpUser):
     def stringify(self, command):
         return json.dumps(command).encode("utf-8")
 
-    @task
+    @task(0)
     def query_balance(self):
         address = "EC9FPVIROHPHYFUZQPLYTKKEYYRAKEBPGBCZYQUUWYDAIBYOXXZYSNEDXXHBIGXKXPSTDOSTD9PVRTLRD"
         command = {
@@ -104,7 +104,7 @@ class IotaHttpUser(HttpUser):
         request_ts = self.client.request(method='post', name='select_tips', url=self.host, 
                                     data=self.stringify(command_ts), headers=self.headers)
         jsonData = request_ts.json()
-        print(jsonData)
+        # print(jsonData)
         # propose a transaction and input trytes string to "trytes"
         message = TryteString.from_unicode('Hello world')
         trytes = TransactionTrytes(message)
@@ -116,7 +116,7 @@ class IotaHttpUser(HttpUser):
         }
         request_pow = self.client.request(method='post', name='pow', url=self.host, 
                                     data=self.stringify(command_pow), headers=self.headers)
-        print(request_pow.json())
+        # print(request_pow.json())
         # broadcast tx with nonce to neighbors, and store to the local ledger
         command_broadcast = {
             "command": "broadcastTransactions",
@@ -124,4 +124,4 @@ class IotaHttpUser(HttpUser):
         }
         request_broadcast = self.client.request(method='post', name='broadcast', url=self.host, 
                                     data=self.stringify(command_broadcast), headers=self.headers)
-        print(request_broadcast.json())
+        # print(request_broadcast.json())
