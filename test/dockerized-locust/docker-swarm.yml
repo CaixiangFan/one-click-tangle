@@ -16,4 +16,4 @@ services:
     command: -f locustfile.py --worker --master-host locust-master
     deploy:
       mode: replicated
-      replicas: 20
+      replicas: 10
