@@ -6,6 +6,8 @@ services:
       - "8089:8089"
     command: -f locustfile.py --master -H http://10.2.8.177:14265 --csv=example --csv-full-history
     deploy:
+      restart_policy:
+        condition: none
       mode: replicated
       replicas: 1
       placement:
@@ -15,5 +17,7 @@ services:
     image: caixiangfan/locust
     command: -f locustfile.py --worker --master-host locust-master
     deploy:
+      restart_policy:
+        condition: none
       mode: replicated
       replicas: 20

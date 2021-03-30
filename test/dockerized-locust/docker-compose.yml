@@ -5,7 +5,7 @@ services:
     image: caixiangfan/locust
     ports:
      - "8089:8089"
-    command: -f locustfile.py --master -H http://10.2.8.177:14265
+    command: -f locustfile.py --master -H http://10.2.8.177:14265 --csv=example --csv-full-history
   
   worker:
     image: caixiangfan/locust
