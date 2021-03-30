@@ -130,18 +130,18 @@ class StagesShape(LoadTestShape):
             stop -- A boolean that can stop that test at a specific stage
         stop_at_end -- Can be set to stop once all stages have run.
     """
-
+    d = 120
     stages = [
-        # {"duration": 60, "users": 10, "spawn_rate": 10},
-        {"duration": 120, "users": 20, "spawn_rate": 10},
-        {"duration": 180, "users": 30, "spawn_rate": 10},
-        {"duration": 240, "users": 40, "spawn_rate": 10},
-        {"duration": 300, "users": 50, "spawn_rate": 10},
-        {"duration": 360, "users": 60, "spawn_rate": 10},
-        {"duration": 420, "users": 70, "spawn_rate": 10},
-        {"duration": 480, "users": 80, "spawn_rate": 10},
-        {"duration": 540, "users": 90, "spawn_rate": 10},
-        {"duration": 600, "users": 100, "spawn_rate": 10},
+        # {"duration": self.d, "users": 10, "spawn_rate": 10},
+        {"duration": 2*self.d, "users": 20, "spawn_rate": 10},
+        {"duration": 3*self.d, "users": 30, "spawn_rate": 10},
+        {"duration": 4*self.d, "users": 40, "spawn_rate": 10},
+        {"duration": 5*self.d, "users": 50, "spawn_rate": 10},
+        {"duration": 6*self.d, "users": 60, "spawn_rate": 10},
+        {"duration": 7*self.d, "users": 70, "spawn_rate": 10},
+        {"duration": 8*self.d, "users": 80, "spawn_rate": 10},
+        {"duration": 9*self.d, "users": 90, "spawn_rate": 10},
+        {"duration": 10*self.d, "users": 100, "spawn_rate": 10},
     ]
 
     def tick(self):
