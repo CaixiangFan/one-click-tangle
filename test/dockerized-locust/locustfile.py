@@ -74,26 +74,6 @@ class IotaHttpUser(HttpUser):
 
     def stringify(self, command):
         return json.dumps(command).encode("utf-8")
-
-    @task(0)
-    def query_balance(self):
-        address = "EC9FPVIROHPHYFUZQPLYTKKEYYRAKEBPGBCZYQUUWYDAIBYOXXZYSNEDXXHBIGXKXPSTDOSTD9PVRTLRD"
-        command = {
-            "command": "getBalances",
-            "addresses": [address]
-        }
-        request = self.client.request(method='post', name='get_balances', url=self.host, 
-                                    data=self.stringify(command), headers=self.headers)
-        print(request.json())
-
-    @task(0)
-    def select_tip(self):
-        command = {
-            "command": "getTransactionsToApprove"
-        }
-        request = self.client.request(method='post', name='select_tips', url=self.host, 
-                                    data=self.stringify(command), headers=self.headers)
-        print(request.json())
     
     @task
     def ts_pow_broadcast(self):
@@ -125,6 +105,17 @@ class IotaHttpUser(HttpUser):
         request_broadcast = self.client.request(method='post', name='broadcast', url=self.host, 
                                     data=self.stringify(command_broadcast), headers=self.headers)
         # print(request_broadcast.json())
+
+    @task(0)
+    def query_balance(self):
+        address = "EC9FPVIROHPHYFUZQPLYTKKEYYRAKEBPGBCZYQUUWYDAIBYOXXZYSNEDXXHBIGXKXPSTDOSTD9PVRTLRD"
+        command = {
+            "command": "getBalances",
+            "addresses": [address]
+        }
+        request = self.client.request(method='post', name='get_balances', url=self.host, 
+                                    data=self.stringify(command), headers=self.headers)
+        print(request.json())
 
 
 class StagesShape(LoadTestShape):

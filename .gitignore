@@ -12,3 +12,4 @@ snapshots
 test/dockerized-locust/__pycache__/
 test/pythonAPI/__pycache__/
 *.pyc
+*.csv

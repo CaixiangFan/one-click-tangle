@@ -4,8 +4,7 @@ services:
     image: caixiangfan/locust
     ports:
       - "8089:8089"
-    command: -f locustfile.py --master -H http://10.2.8.177:14265 
-    # --headless --csv=example -u 40 -r 10 --run-time 10m --stop-timeout 99 --csv-full-history --html
+    command: -f locustfile.py --master -H http://10.2.8.177:14265 --csv=example --csv-full-history
     deploy:
       mode: replicated
       replicas: 1
@@ -17,4 +16,4 @@ services:
     command: -f locustfile.py --worker --master-host locust-master
     deploy:
       mode: replicated
-      replicas: 10
+      replicas: 20
