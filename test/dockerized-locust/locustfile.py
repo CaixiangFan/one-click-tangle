@@ -59,6 +59,10 @@ class IotaApiUser(IotaUser):
         result = self.client.send_transfer(transfers = [self.tx])
 
     @task
+    def prepare_transfer(self):
+        tx_trytes = self.client.prepare_transfer(transfers=[self.tx])
+
+    @task
     def send_trytes(self):
         api = Iota(adapter="http://localhost:14265", testnet = True)
         tx_trytes = api.prepare_transfer(transfers=[self.tx])
