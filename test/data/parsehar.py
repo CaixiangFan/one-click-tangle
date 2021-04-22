@@ -2,7 +2,7 @@ import json
 from haralyzer import HarParser, HarPage
 from datetime import datetime
 
-with open('10.2.9.136_2.har', 'r') as f:
+with open('10.2.8.177.har', 'r') as f:
     har_parser = HarParser(json.loads(f.read()))
 
 data = har_parser.har_data
