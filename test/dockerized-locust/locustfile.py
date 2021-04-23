@@ -58,68 +58,68 @@ class IotaApiUser(IotaUser):
     def send_msg(self):
         result = self.client.send_transfer(transfers = [self.tx])
 
-    @task
+    @task(0)
     def prepare_transfer(self):
         tx_trytes = self.client.prepare_transfer(transfers=[self.tx])
 
-    @task
+    @task(0)
     def send_trytes(self):
         api = Iota(adapter="http://localhost:14265", testnet = True)
         tx_trytes = api.prepare_transfer(transfers=[self.tx])
         resp_sendTrytes = self.client.send_trytes(trytes=tx_trytes['trytes'])
 
 
-class IotaHttpUser(HttpUser):
-    headers = {
-        'content-type': 'application/json',
-        'X-IOTA-API-Version': '1'
-    }
-    wait_time = between(0,1)
+# class IotaHttpUser(HttpUser):
+#     headers = {
+#         'content-type': 'application/json',
+#         'X-IOTA-API-Version': '1'
+#     }
+#     wait_time = between(0,1)
 
-    def stringify(self, command):
-        return json.dumps(command).encode("utf-8")
+#     def stringify(self, command):
+#         return json.dumps(command).encode("utf-8")
     
-    @task
-    def ts_pow_broadcast(self):
-        # select two tips to attach new transaction
-        command_ts = {
-            "command": "getTransactionsToApprove"
-        }
-        request_ts = self.client.request(method='post', name='select_tips', url=self.host, 
-                                    data=self.stringify(command_ts), headers=self.headers)
-        jsonData = request_ts.json()
-        # print(jsonData)
-        # propose a transaction and input trytes string to "trytes"
-        message = TryteString.from_unicode('Hello world')
-        trytes = TransactionTrytes(message)
-        command_pow = { 
-            "command": "attachToTangle", 
-            "trunkTransaction": jsonData['trunkTransaction'],
-            "branchTransaction": jsonData['branchTransaction'],
-            "trytes": [str(trytes)]
-        }
-        request_pow = self.client.request(method='post', name='pow', url=self.host, 
-                                    data=self.stringify(command_pow), headers=self.headers)
-        # print(request_pow.json())
-        # broadcast tx with nonce to neighbors, and store to the local ledger
-        command_broadcast = {
-            "command": "broadcastTransactions",
-            "trytes": request_pow.json()['trytes']
-        }
-        request_broadcast = self.client.request(method='post', name='broadcast', url=self.host, 
-                                    data=self.stringify(command_broadcast), headers=self.headers)
-        # print(request_broadcast.json())
+#     @task
+#     def ts_pow_broadcast(self):
+#         # select two tips to attach new transaction
+#         command_ts = {
+#             "command": "getTransactionsToApprove"
+#         }
+#         request_ts = self.client.request(method='post', name='select_tips', url=self.host, 
+#                                     data=self.stringify(command_ts), headers=self.headers)
+#         jsonData = request_ts.json()
+#         # print(jsonData)
+#         # propose a transaction and input trytes string to "trytes"
+#         message = TryteString.from_unicode('Hello world')
+#         trytes = TransactionTrytes(message)
+#         command_pow = { 
+#             "command": "attachToTangle", 
+#             "trunkTransaction": jsonData['trunkTransaction'],
+#             "branchTransaction": jsonData['branchTransaction'],
+#             "trytes": [str(trytes)]
+#         }
+#         request_pow = self.client.request(method='post', name='pow', url=self.host, 
+#                                     data=self.stringify(command_pow), headers=self.headers)
+#         # print(request_pow.json())
+#         # broadcast tx with nonce to neighbors, and store to the local ledger
+#         command_broadcast = {
+#             "command": "broadcastTransactions",
+#             "trytes": request_pow.json()['trytes']
+#         }
+#         request_broadcast = self.client.request(method='post', name='broadcast', url=self.host, 
+#                                     data=self.stringify(command_broadcast), headers=self.headers)
+#         # print(request_broadcast.json())
 
-    @task(0)
-    def query_balance(self):
-        address = "EC9FPVIROHPHYFUZQPLYTKKEYYRAKEBPGBCZYQUUWYDAIBYOXXZYSNEDXXHBIGXKXPSTDOSTD9PVRTLRD"
-        command = {
-            "command": "getBalances",
-            "addresses": [address]
-        }
-        request = self.client.request(method='post', name='get_balances', url=self.host, 
-                                    data=self.stringify(command), headers=self.headers)
-        print(request.json())
+#     @task(0)
+#     def query_balance(self):
+#         address = "EC9FPVIROHPHYFUZQPLYTKKEYYRAKEBPGBCZYQUUWYDAIBYOXXZYSNEDXXHBIGXKXPSTDOSTD9PVRTLRD"
+#         command = {
+#             "command": "getBalances",
+#             "addresses": [address]
+#         }
+#         request = self.client.request(method='post', name='get_balances', url=self.host, 
+#                                     data=self.stringify(command), headers=self.headers)
+#         print(request.json())
 
 
 class StagesShape(LoadTestShape):
