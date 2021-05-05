@@ -36,3 +36,6 @@ if is_spent:
     print('Address %s is spent!' % address )
 else:
     print('Your address is: %s' % address )
+    with open('seeds.txt','a') as f:
+        f.write('\n' + "seed: " + str(seed) + '\n')
+        f.write("addr: " + str(address) + '\n')
