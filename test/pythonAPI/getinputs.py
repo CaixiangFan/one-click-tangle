@@ -13,5 +13,5 @@ if len(sys.argv) == 2:
 
 api = Iota(adapter = url, seed = my_seed)
 
-input = api.get_inputs(start=0, stop=3)
+input = api.get_inputs()
 print(input)

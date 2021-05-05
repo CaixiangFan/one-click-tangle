@@ -6,7 +6,7 @@ with open('config.json', 'r') as f:
     data = json.load(f)
     url = data['url']
 # Put your seed here from Tutorial 4.a, or a seed that owns tokens (devnet)
-my_seed = "IBFDSSDANPEVADCCRFYAZFMPLUJQFCND9SDIZSMGFWKDVTN9CLUWXVJTYTKQXHPCXYBYIMSXTEUBTNQDA"
+my_seed = "PZBAJMHQOWHZUMBPNAWASU9YQMQ9AEJQSDCRVPKKIQOTVCSPLNKTSOGVNFTCGDMX9IYTLAQDIEKLALLHB"
 
 # Declare an API object
 api = Iota(
@@ -18,18 +18,18 @@ api = Iota(
 # Addres to receive 1i
 # Feel free to replace it. For example, run the code from Tutorial 4.a
 # and use that newly generated address with a 'fresh' seed.
-receiver = Address(b'YLPMKSARYMVZYFEFRIRWCVKRTYMZBZMIHLBVGFZZYRSECLHYJREJQXRTASEKGWVFXOSXYSQNGGJUJQLSZ')
+receiver = Address(b'B9WSEPNPHMEIWIAUQIKUVBGKSBTIVZHFKDNWAVNWTRQUKBUWBE9VUME9DGFEHVAWNJZMEBNCOURPHYDAB')
 
 # print('Constructing transfer of 1i...')
 
 tx = ProposedTransaction(
     address=receiver,
-    value=90,
-    message=TryteString.from_unicode('I just sent you 1i, use it wisely!'),
+    value=100,
+    message=TryteString.from_unicode('I just sent you 100i, use it wisely!'),
     tag=Tag('VALUETX'),
 )
 
-input = api.get_inputs(start=0,stop=3)
+input = api.get_inputs()
 print(input)
 
 inputs = input['inputs']
