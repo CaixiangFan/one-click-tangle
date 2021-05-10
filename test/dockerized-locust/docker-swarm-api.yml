@@ -4,7 +4,7 @@ services:
     image: caixiangfan/locust
     ports:
       - "8089:8089"
-    command: -f locustfile.py --master -H http://10.2.8.177:14265 --csv=example --csv-full-history
+    command: -f locustfile.py IotaApiUser --master -H http://10.2.8.177:14265 --csv=example --csv-full-history
     deploy:
       mode: replicated
       replicas: 1
@@ -13,7 +13,7 @@ services:
 
   locust-worker:
     image: caixiangfan/locust
-    command: -f locustfile.py --worker --master-host locust-master
+    command: -f locustfile.py IotaApiUser --worker --master-host locust-master
     deploy:
       mode: replicated
       replicas: 10

@@ -1,7 +1,6 @@
 from iota import Iota, ProposedTransaction, Address, TryteString, TransactionTrytes
 from locust import User, task, between, HttpUser, LoadTestShape
 import time, json, sys
-import numpy as np
 
 
 class IotaClient():
@@ -46,6 +45,7 @@ class IotaUser(User):
 
 
 class IotaApiUser(IotaUser):
+    wait_time = between(0,1)
     address = 'ZLGVEQ9JUZZWCZXLWVNTHBDX9G9KZTJP9VEERIIFHY9SIQKYBVAHIMLHXPQVE9IXFDDXNHQINXJDRPFDXNYVAPLZAW'
     message = TryteString.from_unicode('Hello world')
     tx = ProposedTransaction(
@@ -53,11 +53,6 @@ class IotaApiUser(IotaUser):
         message = message,
         value = 0
     )
-    last_wait_time = 0
-
-    def wait_time(self):
-        self.last_wait_time = np.random.exponential(scale=1)
-        return self.last_wait_time
 
     @task
     def send_msg(self):
@@ -74,60 +69,57 @@ class IotaApiUser(IotaUser):
         resp_sendTrytes = self.client.send_trytes(trytes=tx_trytes['trytes'])
 
 
-class IotaHttpUser(HttpUser):
-    headers = {
-        'content-type': 'application/json',
-        'X-IOTA-API-Version': '1'
-    }
-    last_wait_time = 0
+# class IotaHttpUser(HttpUser):
+#     headers = {
+#         'content-type': 'application/json',
+#         'X-IOTA-API-Version': '1'
+#     }
+#     wait_time = between(0,1)
 
-    def wait_time(self):
-        self.last_wait_time = np.random.exponential(scale=1)
-        return self.last_wait_time
-
-    def stringify(self, command):
-        return json.dumps(command).encode("utf-8")
+#     def stringify(self, command):
+#         return json.dumps(command).encode("utf-8")
     
-    @task
-    def ts_pow_broadcast(self):
-        # select two tips to attach new transaction
-        command_ts = {
-            "command": "getTransactionsToApprove"
-        }
-        request_ts = self.client.request(method='post', name='select_tips', url=self.host, 
-                                    data=self.stringify(command_ts), headers=self.headers)
-        jsonData = request_ts.json()
+#     @task
+#     def ts_pow_broadcast(self):
+#         # select two tips to attach new transaction
+#         command_ts = {
+#             "command": "getTransactionsToApprove"
+#         }
+#         request_ts = self.client.request(method='post', name='select_tips', url=self.host, 
+#                                     data=self.stringify(command_ts), headers=self.headers)
+#         jsonData = request_ts.json()
+#         # print(jsonData)
+#         # propose a transaction and input trytes string to "trytes"
+#         message = TryteString.from_unicode('Hello world')
+#         trytes = TransactionTrytes(message)
+#         command_pow = { 
+#             "command": "attachToTangle", 
+#             "trunkTransaction": jsonData['trunkTransaction'],
+#             "branchTransaction": jsonData['branchTransaction'],
+#             "trytes": [str(trytes)]
+#         }
+#         request_pow = self.client.request(method='post', name='pow', url=self.host, 
+#                                     data=self.stringify(command_pow), headers=self.headers)
+#         # print(request_pow.json())
+#         # broadcast tx with nonce to neighbors, and store to the local ledger
+#         command_broadcast = {
+#             "command": "broadcastTransactions",
+#             "trytes": request_pow.json()['trytes']
+#         }
+#         request_broadcast = self.client.request(method='post', name='broadcast', url=self.host, 
+#                                     data=self.stringify(command_broadcast), headers=self.headers)
+#         # print(request_broadcast.json())
 
-        # # propose a transaction and input trytes string to "trytes"
-        # message = TryteString.from_unicode('Hello world')
-        # trytes = TransactionTrytes(message)
-        # command_pow = { 
-        #     "command": "attachToTangle", 
-        #     "trunkTransaction": jsonData['trunkTransaction'],
-        #     "branchTransaction": jsonData['branchTransaction'],
-        #     "trytes": [str(trytes)]
-        # }
-        # request_pow = self.client.request(method='post', name='pow', url=self.host, 
-        #                             data=self.stringify(command_pow), headers=self.headers)
-
-        # # broadcast tx with nonce to neighbors, and store to the local ledger
-        # command_broadcast = {
-        #     "command": "broadcastTransactions",
-        #     "trytes": request_pow.json()['trytes']
-        # }
-        # request_broadcast = self.client.request(method='post', name='broadcast', url=self.host, 
-        #                             data=self.stringify(command_broadcast), headers=self.headers)
-
-    @task(0)
-    def query_balance(self):
-        address = "EC9FPVIROHPHYFUZQPLYTKKEYYRAKEBPGBCZYQUUWYDAIBYOXXZYSNEDXXHBIGXKXPSTDOSTD9PVRTLRD"
-        command = {
-            "command": "getBalances",
-            "addresses": [address]
-        }
-        request = self.client.request(method='post', name='get_balances', url=self.host, 
-                                    data=self.stringify(command), headers=self.headers)
-        print(request.json())
+#     @task(0)
+#     def query_balance(self):
+#         address = "EC9FPVIROHPHYFUZQPLYTKKEYYRAKEBPGBCZYQUUWYDAIBYOXXZYSNEDXXHBIGXKXPSTDOSTD9PVRTLRD"
+#         command = {
+#             "command": "getBalances",
+#             "addresses": [address]
+#         }
+#         request = self.client.request(method='post', name='get_balances', url=self.host, 
+#                                     data=self.stringify(command), headers=self.headers)
+#         print(request.json())
 
 
 class StagesShape(LoadTestShape):
@@ -145,9 +137,9 @@ class StagesShape(LoadTestShape):
 
     stages = [
         # {"duration": d, "users": 10, "spawn_rate": 10},
-        {"duration": 120, "users": 20, "spawn_rate": 20},
-        {"duration": 240, "users": 30, "spawn_rate": 20},
-        {"duration": 360, "users": 40, "spawn_rate": 20},
+        {"duration": 120, "users": 20, "spawn_rate": 50},
+        {"duration": 240, "users": 30, "spawn_rate": 50},
+        {"duration": 360, "users": 40, "spawn_rate": 50},
         {"duration": 480, "users": 50, "spawn_rate": 50},
         {"duration": 600, "users": 60, "spawn_rate": 100},
         {"duration": 720, "users": 70, "spawn_rate": 100},
