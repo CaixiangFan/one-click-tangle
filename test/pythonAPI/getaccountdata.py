@@ -6,7 +6,7 @@ with open('config.json', 'r') as f:
     data = json.load(f)
     url = data['url']
 
-my_seed = 'YNXXCRIRSDQURJBUOBOVGIDEOOYLCNAQKJSCVMLZWQQ99BYE9GLJNFIJNVHWSGFBCIECXJJZFSL9RCROA'
+my_seed = 'GVCLZGQGVIFAFFHIFPFAYWJQLRYHNNUBKNNXIAPHMLOSIAWQTEZUALGAEMGGZRHVBKFHOQUMRZFTUNTH9'
 
 if len(sys.argv) == 2:
     my_seed = sys.argv[1]

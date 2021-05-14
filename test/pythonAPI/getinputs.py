@@ -6,12 +6,12 @@ with open('config.json', 'r') as f:
     data = json.load(f)
     url = data['url']
 
-my_seed = 'JSFCIXUGZADG9UWIIXKXKQXHNWPUJLWTOUJWMVMLSOI9BR9ONMSOBTNSN9XHITHHUQR9HVLFBIPHJUZEB'
+my_seed = 'YGCOACXP9SCGRWZBXLMIINVDFSDHKKIFCPNWYQGX9VRMM99VCHXFTNLELCHNJQTLTFTXRZBGEKUUGOPM9'
 
 if len(sys.argv) == 2:
     my_seed = sys.argv[1]
 
 api = Iota(adapter = url, seed = my_seed)
 
-input = api.get_inputs()
+input = api.get_inputs(start=0,stop=10)
 print(input)
